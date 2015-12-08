@@ -15,6 +15,7 @@ tar -cf - directory_to_backup | openssl aes-128-cbc -pass file:certs/key.pem -sa
 ```
 
 Decrypt directory:
+
 ```bash
 openssl aes-128-cbc -pass file:certs/key.pem -d -salt -in backup.tar.aes | tar -x -f -
 ```
