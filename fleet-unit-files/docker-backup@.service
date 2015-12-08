@@ -1,0 +1,16 @@
+[Unit]
+Description=Backup Docker Private Registry
+Requires=docker.service
+
+[Service]
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker rm docker-backup-%i
+ExecStartPre=-/usr/bin/docker kill docker-backup-%i
+ExecStart=/usr/bin/docker run -rm --name docker-backup-01 \
+    --cap-add SYS_ADMIN \
+    --device /dev/fuse \
+    -e WEBDAV_HOST={webdav_url} \
+    -e WEBDAV_USER={user} \
+    -e WEBDAV_PASSWORD={password}
+    docker-backup:0.1
+ExecStop=/usr/bin/docker stop docker-backup-%i
