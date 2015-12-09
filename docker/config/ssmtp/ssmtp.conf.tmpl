@@ -1,0 +1,23 @@
+#
+# Config file for sSMTP sendmail
+#
+# The person who gets all mail for userids < 1000
+# Make this empty to disable rewriting.
+root=postmaster
+
+# The place where the mail goes. The actual machine name is required no
+# MX records are consulted. Commonly mailhosts are named mail.domain.com
+{{ if .Env.SMTP_HUB }}mailhub={{ .Env.SMTP_HUB }}{{ else }}localhost{{ end }}
+{{ if .Env.SMTP_USER }}AuthUser={{ .Env.SMTP_USER }}{{ end }}
+{{ if .Env.SMTP_PASS }}AuthPass={{ .Env.SMTP_PASS }}{{ end }}
+
+# Where will the mail seem to come from?
+{{ if .Env.SMTP_DOMAIN }}rewriteDomain={{ .Env.SMTP_DOMAIN }}{{ end }}
+
+# The full hostname
+{{ if .Env.SMTP_HOSTNAME }}hostname={{ .Env.SMTP_HOSTNAME }}{{ end }}
+
+# Are users allowed to set their own From: address?
+# YES - Allow the user to specify their own From: address
+# NO - Use the system generated From: address
+FromLineOverride=YES
