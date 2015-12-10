@@ -7,6 +7,7 @@ The Backups are stored encrypted, so we don't need to worry about sensitive data
 Docker environment variables:
 - GPG_PUBLIC_KEY: The filelocation for the GPG_PUBLIC KEY, Note that this key has to be for the `database` user
 - BACKUP_DIRS: The directories to backup to the given archive name, seperated by space (ex. "/data/dir1:archive1 /data/dir2:archive2)
+- BACKUP_MYSQL: The Databases that have to be backuped, seperated by space (ex. HOST:DATABASE:USER:PASSWORD:ARCHIVE HOST2:DATABASE2:USER2:PASSWORD2:ARCHIVE)
 - WEBDAV_HOST: The host where to store the backup. This will be mounted as /mnt/backup
 - WEBDAV_USER: The webdav user to login to storage
 - WEBDAV_PASSWORD: The webdav password to login to storage

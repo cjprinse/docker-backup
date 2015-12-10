@@ -2,7 +2,6 @@ docker-backup:
   build: .
   volumes:
     - ./certs:/certs
-    - ./data:/data
   cap_add:
     - SYS_ADMIN
   devices:
@@ -18,3 +17,4 @@ docker-backup:
     SMTP_DOMAIN: {smtp_domain}
     SMTP_HOSTNAME: {smtp_hostname}
     BACKUP_DIRS: {filepath_to_archive_seperated_by_space}
+    BACKUP_MYSQL: {host1:db1:user1:password1:archive1 host2:db2:user2:password2:archive2}

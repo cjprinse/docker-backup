@@ -10,6 +10,7 @@ mkdir -p /tmp/backup
 mkdir -p /mnt/backup/$NOW
 cd /mnt/backup/$NOW
 
+echo 'Backup Directories'
 arrDIRS=($BACKUP_DIRS)
 for i in "${arrDIRS[@]}"
 do
@@ -20,6 +21,19 @@ do
    tar -zc $DIR | gpg --trust-model always -e -r backup -o /tmp/backup/$ARCHIVENAME
 done
 
+echo 'Backup Mysql Database'
+arrMYSQL=($BACKUP_MYSQL)
+for i in "${BACKUP_MYSQL[@]}"
+do
+   arrDETAILS=(${i//:/ })
+   HOST=${arrDETAILS[0]}
+   DB=${arrDETAILS[1]}
+   USER=${arrDETAILS[2]}
+   PASS=${arrDETAILS[3]}
+   ARCHIVENAME=${arrDETAILS[4]}.sql.gz.gpg
+   echo Create backup of database $HOST:$DB to $ARCHIVENAME
+   mysqldump -h $HOST -u $USER -p$PASS $DB | gzip -9 | gpg --trust-model always -e -r backup -o /tmp/backup/$ARCHIVENAME
+done
 
 cp -R /tmp/backup/* /mnt/backup/$NOW/
 
