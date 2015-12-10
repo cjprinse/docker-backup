@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 echo $WEBDAV_HOST $WEBDAV_USER $WEBDAV_PASSWORD > /etc/davfs2/secrets
 echo $WEBDAV_HOST" /mnt/backup davfs user,rw,auto 0 0" > /etc/fstab
 
@@ -6,12 +6,26 @@ mount /mnt/backup
 
 NOW=$(date +%Y/%m/%d/%H_%M)
 
+mkdir -p /tmp/backup
 mkdir -p /mnt/backup/$NOW
 cd /mnt/backup/$NOW
 
+arrDIRS=($BACKUP_DIRS)
+for i in "${arrDIRS[@]}"
+do
+   arrDETAILS=(${i//:/ })
+   DIR=${arrDETAILS[0]}
+   ARCHIVENAME=${arrDETAILS[1]}.tar.gz.gpg
+   echo Create backup $DIR to $ARCHIVENAME
+   tar -zc $DIR | gpg --trust-model always -e -r backup -o /tmp/backup/$ARCHIVENAME
+done
 
-echo "blaat"
 
-#umount /mnt/backup
+cp -R /tmp/backup/* /mnt/backup/$NOW/
 
-#kill 1
+echo 'backup is syncing to server...'
+sleep 20
+umount -l /mnt/backup
+rm -rf /tmp/backup
+
+kill 1

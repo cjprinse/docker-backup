@@ -9,7 +9,7 @@ RUN apt-get update && apt-get install -y \
     dkms \
     davfs2 \
     ssmtp \
-    wget
+    wget \
 
 RUN cd /tmp
 RUN wget https://github.com/jwilder/dockerize/releases/download/v0.0.4/dockerize-linux-amd64-v0.0.4.tar.gz

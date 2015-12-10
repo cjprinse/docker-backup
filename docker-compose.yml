@@ -1,25 +1,20 @@
 docker-backup:
   build: .
   volumes:
-    - ./backup.sh:/opt/backup.sh
+    - ./certs:/certs
+    - ./data:/data
   cap_add:
     - SYS_ADMIN
   devices:
     - "/dev/fuse"
   environment:
-#    WEBDAV_HOST: {webdav_url}
-#    WEBDAV_USER: {webdav_user}
-#    WEBDAV_PASSWORD: {webdav_password}
-#    SMTP_HUB: {smtp_hub}
-#    SMTP_USER: {smtp_user}
-#    SMTP_PASS: {smtp_pass}
-#    SMTP_DOMAIN: {smtp_domain}
-#    SMTP_HOSTNAME: {smtp_hostname}
-    WEBDAV_HOST: https://christjannl.stackstorage.com/remote.php/webdav/
-    WEBDAV_USER: backuphomeserver
-    WEBDAV_PASSWORD: wY1rye1Freg1Dic2I
+    GPG_PUBLIC_KEY: {path_to_backup_public_key}
+    WEBDAV_HOST: {webdav_url}
+    WEBDAV_USER: {webdav_user}
+    WEBDAV_PASSWORD: {webdav_password}
     SMTP_HUB: {smtp_hub}
     SMTP_USER: {smtp_user}
     SMTP_PASS: {smtp_pass}
     SMTP_DOMAIN: {smtp_domain}
     SMTP_HOSTNAME: {smtp_hostname}
+    BACKUP_DIRS: {filepath_to_archive_seperated_by_space}
