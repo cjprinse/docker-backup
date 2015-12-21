@@ -4,6 +4,8 @@
 The Docker backup image creates a backup to a webdev location. It is possible to send an email afterward. (Work in progress)
 The Backups are stored encrypted, so we don't need to worry about sensitive data in the backup.
 
+To run the container: see an example for the run command in fleet-unit-files/docker-backup@.service
+
 Docker environment variables:
 - GPG_PUBLIC_KEY: The filelocation for the GPG_PUBLIC KEY, Note that this key has to be for the `database` user
 - BACKUP_DIRS: The directories to backup to the given archive name, seperated by space (ex. "/data/dir1:archive1 /data/dir2:archive2)
